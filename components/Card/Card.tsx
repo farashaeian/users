@@ -1,7 +1,7 @@
-import { UserInfo } from "@/types"
+import { CardProps } from "@/types"
 import userAvatar from '@/public/assets/user.png'
 
-const Card = ({ avatar, first_name, last_name, email, onClick }: UserInfo) => {
+const Card = ({ avatar, first_name, last_name, email, onClick }: CardProps) => {
     return (
         <div className="card-container"
             onClick={onClick}

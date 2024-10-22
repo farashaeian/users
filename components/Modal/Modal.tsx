@@ -1,7 +1,7 @@
-import { UserInfo } from "@/types";
+import { User } from "@/types";
 
 interface ModalProps {
-    user: UserInfo | null;
+    user: User| null;
     onClose: () => void;
   }
   

@@ -10,13 +10,13 @@ export interface ApiResponse {
     page: number;
     total_pages: number;
 }
-export interface UserInfo {
+export interface CardProps {
     id?: number;
     first_name: string;
     last_name: string;
     email?: string;
     avatar?: string;
-    onClick?: () => void;
+    onClick: () => void;
 }
 export interface Message {
     text: string;
