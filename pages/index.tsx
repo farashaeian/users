@@ -70,34 +70,34 @@ const Home: React.FC = () => {
 
   return (
     <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 md:py-20 gap-8 sm:p-4 font-[family-name:var(--font-geist-sans)]`}
+      className={`${geistSans.variable} ${geistMono.variable} container font-[family-name:var(--font-geist-sans)]`}
     >
-      <div className='text-4xl font-bold text-fuchsia-900'>Users List</div>
+      <div className='page-title'>Users List</div>
 
       {loading && <Loading/>}
       {error && <p className='text-red-500'>{error}</p>}
       {!loading && users.length === 0 && <p>No users found.</p>}
 
       {users.length > 0 && (
-        <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 items-center justify-items-center '>
+        <div className='list-container'>
           {users.map((user) => (
             <Card key={user.id}
               avatar={user.avatar}
               first_name={user.first_name}
               last_name={user.last_name}
               email={user.email}
-              onClick={() => handleCardClick(user)}  // Set the click handler for the card
+              onClick={() => handleCardClick(user)}
             />
           ))}
         </div>
       )}
 
       {users.length > 0 && (
-        <div className='flex flex-row gap-2 md:gap-4 items-baseline	'>
+        <div className='pagination-container'>
           <button
             disabled={page === 1}
             onClick={() => handlePagination(page - 1)}
-            className='min-w-9 p-1 rounded  border-2  border-solid border-fuchsia-900	hover:border-fuchsia-600 focus:bg-gray-100'
+            className='pagination-button'
           >
             Prev
           </button>
@@ -107,7 +107,7 @@ const Home: React.FC = () => {
           <button
             disabled={page === totalPages}
             onClick={() => handlePagination(page + 1)}
-            className='min-w-9 p-1 rounded  border-2  border-solid border-fuchsia-900	hover:border-fuchsia-600 focus:bg-gray-100'
+            className='pagination-button'
           >
             Next
           </button>

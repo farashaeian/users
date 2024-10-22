@@ -25,3 +25,30 @@ body {
     text-wrap: balance;
   }
 }
+
+@layer base {
+  .container {
+    @apply grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 md:py-20 gap-8 sm:p-4 ;
+  }
+  .page-title{
+    @apply text-4xl font-bold text-fuchsia-900;
+  }
+  .list-container{
+    @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 items-center justify-items-center;
+  }
+  .pagination-container{
+    @apply flex flex-row gap-2 md:gap-4 items-baseline;
+  }
+  .pagination-button{
+    @apply min-w-9 p-1 rounded  border-2  border-solid border-fuchsia-900	hover:border-fuchsia-600 focus:bg-gray-100;
+  }
+  .card-container{
+    @apply w-full p-4 rounded flex flex-col md:flex-row justify-start gap-2 border-2 border-solid border-fuchsia-300 hover:border-fuchsia-600 hover:shadow-2xl ;
+  }
+  .modal-bg{
+    @apply fixed inset-0 bg-gray-800 bg-opacity-70 backdrop-blur-sm flex items-center justify-center z-50;
+  }
+  .modal-container{
+    @apply bg-white rounded-lg p-6 w-96 relative shadow-xl
+  }
+}
