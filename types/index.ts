@@ -14,8 +14,8 @@ export interface UserInfo {
     id?: number;
     first_name: string;
     last_name: string;
-    email: string;
-    avatar: string;
+    email?: string;
+    avatar?: string;
     onClick?: () => void;
 }
 export interface Message {

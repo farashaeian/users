@@ -43,7 +43,7 @@ body {
     @apply min-w-9 p-1 rounded  border-2  border-solid border-fuchsia-900	hover:border-fuchsia-600 focus:bg-gray-100;
   }
   .card-container{
-    @apply w-full p-4 rounded flex flex-col md:flex-row justify-start gap-2 border-2 border-solid border-fuchsia-300 hover:border-fuchsia-600 hover:shadow-2xl ;
+    @apply w-full p-4 rounded flex flex-col md:flex-row items-center md:items-end justify-start gap-2 border-2 border-solid border-fuchsia-300 hover:border-fuchsia-600 hover:shadow-2xl ;
   }
   .modal-bg{
     @apply fixed inset-0 bg-gray-800 bg-opacity-70 backdrop-blur-sm flex items-center justify-center z-50;

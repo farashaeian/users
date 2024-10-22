@@ -1,14 +1,15 @@
 import { UserInfo } from "@/types"
+import userAvatar from '@/public/assets/user.png'
 
 const Card = ({ avatar, first_name, last_name, email, onClick }: UserInfo) => {
     return (
         <div className="card-container"
             onClick={onClick}
         >
-            <img src={avatar} alt={`${first_name} ${last_name}`} className="rounded aspect-square" />
+            <img src={avatar ? avatar : userAvatar.src} alt={`${first_name} ${last_name}`} className="rounded aspect-square h-32 w-32" />
             <div className="flex flex-col justify-end">
                 <p>{first_name} {last_name}</p>
-                <p className="text-xs">{email}</p>
+                {email && <p className="text-xs">{email}</p>}
             </div>
         </div>
     )
