@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import Card from '@/components/Card';
 import Modal from '@/components/Modal';
 import { ApiResponse, User } from '@/types';
+import Loading from '@/components/Loading';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -21,7 +22,7 @@ const geistMono = localFont({
 const Home: React.FC = () => {
   const router = useRouter();
   const [users, setUsers] = useState<User[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -29,7 +30,6 @@ const Home: React.FC = () => {
 
   // Fetch users data from API based on current page
   const fetchUsers = async (page: number) => {
-    setLoading(true);
     setError(null);
 
     try {
@@ -58,15 +58,15 @@ const Home: React.FC = () => {
     router.push(`?page=${newPage}`, undefined, { shallow: true });
   };
 
-// Open modal with user info
-const handleCardClick = (user: User) => {
-  setSelectedUser(user);
-};
+  // Open modal with user info
+  const handleCardClick = (user: User) => {
+    setSelectedUser(user);
+  };
 
-// Close modal
-const handleCloseModal = () => {
-  setSelectedUser(null);
-};
+  // Close modal
+  const handleCloseModal = () => {
+    setSelectedUser(null);
+  };
 
   return (
     <div
@@ -74,43 +74,45 @@ const handleCloseModal = () => {
     >
       <div className='text-4xl font-bold text-fuchsia-900'>Users List</div>
 
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
+      {loading && <Loading/>}
+      {error && <p className='text-red-500'>{error}</p>}
       {!loading && users.length === 0 && <p>No users found.</p>}
 
       {users.length > 0 && (
         <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 items-center justify-items-center '>
           {users.map((user) => (
             <Card key={user.id}
-            avatar={user.avatar}
-            first_name={user.first_name}
-            last_name={user.last_name}
-            email={user.email} 
-            onClick={() => handleCardClick(user)}  // Set the click handler for the card
-             />
+              avatar={user.avatar}
+              first_name={user.first_name}
+              last_name={user.last_name}
+              email={user.email}
+              onClick={() => handleCardClick(user)}  // Set the click handler for the card
+            />
           ))}
         </div>
       )}
 
-      <div className='flex flex-row gap-2 md:gap-4 items-baseline	'>
-        <button
-          disabled={page === 1}
-          onClick={() => handlePagination(page - 1)}
-          className='min-w-9 p-1 rounded  border-2  border-solid border-fuchsia-900	hover:border-fuchsia-600 focus:bg-gray-100'
-        >
-          Prev
-        </button>
+      {users.length > 0 && (
+        <div className='flex flex-row gap-2 md:gap-4 items-baseline	'>
+          <button
+            disabled={page === 1}
+            onClick={() => handlePagination(page - 1)}
+            className='min-w-9 p-1 rounded  border-2  border-solid border-fuchsia-900	hover:border-fuchsia-600 focus:bg-gray-100'
+          >
+            Prev
+          </button>
 
-        <span> {page} / {totalPages}</span>
+          <span> {page} / {totalPages}</span>
 
-        <button
-          disabled={page === totalPages}
-          onClick={() => handlePagination(page + 1)}
-          className='min-w-9 p-1 rounded  border-2  border-solid border-fuchsia-900	hover:border-fuchsia-600 focus:bg-gray-100'
-        >
-          Next
-        </button>
-      </div>
+          <button
+            disabled={page === totalPages}
+            onClick={() => handlePagination(page + 1)}
+            className='min-w-9 p-1 rounded  border-2  border-solid border-fuchsia-900	hover:border-fuchsia-600 focus:bg-gray-100'
+          >
+            Next
+          </button>
+        </div>
+      )}
 
       {/* Modal for user details */}
       {selectedUser && (
