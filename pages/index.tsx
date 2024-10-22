@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import localFont from "next/font/local";
-import Card from './components/Card/Card';
+import Card from '@/components/Card';
+import Modal from '@/components/Modal';
+import { ApiResponse, User } from '@/types';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -14,19 +16,7 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export interface User {
-  id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  avatar: string;
-}
 
-interface ApiResponse {
-  data: User[];
-  page: number;
-  total_pages: number;
-}
 
 const Home: React.FC = () => {
   const router = useRouter();
@@ -35,6 +25,7 @@ const Home: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);  // Add modal state
 
   // Fetch users data from API based on current page
   const fetchUsers = async (page: number) => {
@@ -67,6 +58,16 @@ const Home: React.FC = () => {
     router.push(`?page=${newPage}`, undefined, { shallow: true });
   };
 
+// Open modal with user info
+const handleCardClick = (user: User) => {
+  setSelectedUser(user);
+};
+
+// Close modal
+const handleCloseModal = () => {
+  setSelectedUser(null);
+};
+
   return (
     <div
       className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 md:py-20 gap-8 sm:p-4 font-[family-name:var(--font-geist-sans)]`}
@@ -85,12 +86,13 @@ const Home: React.FC = () => {
             first_name={user.first_name}
             last_name={user.last_name}
             email={user.email} 
+            onClick={() => handleCardClick(user)}  // Set the click handler for the card
              />
           ))}
         </div>
       )}
 
-      <div className='flex flex-row gap-2 md:gap-4'>
+      <div className='flex flex-row gap-2 md:gap-4 items-baseline	'>
         <button
           disabled={page === 1}
           onClick={() => handlePagination(page - 1)}
@@ -109,6 +111,11 @@ const Home: React.FC = () => {
           Next
         </button>
       </div>
+
+      {/* Modal for user details */}
+      {selectedUser && (
+        <Modal user={selectedUser} onClose={handleCloseModal} />
+      )}
     </div>
   );
 };
