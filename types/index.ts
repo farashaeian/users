@@ -5,7 +5,6 @@ export interface User {
     email: string;
     avatar: string;
 }
-
 export interface ApiResponse {
     data: User[];
     page: number;
@@ -18,4 +17,8 @@ export interface UserInfo {
     email: string;
     avatar: string;
     onClick?: () => void;
+}
+export interface Message {
+    text: string;
+    type: 'error' | 'info';
 }

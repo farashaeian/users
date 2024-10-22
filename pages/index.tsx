@@ -6,6 +6,7 @@ import Modal from '@/components/Modal';
 import { ApiResponse, User } from '@/types';
 import Loading from '@/components/Loading';
 import { usersApi } from '@/routes';
+import Message from '@/components/Message';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -78,8 +79,8 @@ const Home: React.FC = () => {
       <div className='page-title'>Users List</div>
 
       {loading && <Loading />}
-      {error && <p className='text-red-500'>{error}</p>}
-      {!error && !loading && users.length === 0 && <p>No users found.</p>}
+      {error && <Message type='error' text={error}/>}
+      {!error && !loading && users.length === 0 && <Message type='info' text='No users found.'/> }
 
       {users.length > 0 && (
         <div className='list-container'>
