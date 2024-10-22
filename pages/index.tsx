@@ -5,7 +5,7 @@ import Card from '@/components/Card';
 import Modal from '@/components/Modal';
 import { ApiResponse, User } from '@/types';
 import Loading from '@/components/Loading';
-import { usersApi } from '@/routes';
+import { usersApi } from '@/api';
 import Message from '@/components/Message';
 
 const geistSans = localFont({
