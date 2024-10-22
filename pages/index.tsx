@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import localFont from "next/font/local";
+import Card from './components/Card/Card';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -13,7 +14,7 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-interface User {
+export interface User {
   id: number;
   first_name: string;
   last_name: string;
@@ -67,40 +68,43 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div 
-    className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
+    <div
+      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 md:py-20 gap-8 sm:p-4 font-[family-name:var(--font-geist-sans)]`}
     >
-      <h1>Users List</h1>
+      <div className='text-4xl font-bold text-fuchsia-900'>Users List</div>
 
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       {!loading && users.length === 0 && <p>No users found.</p>}
 
       {users.length > 0 && (
-        <ul>
+        <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 items-center justify-items-center '>
           {users.map((user) => (
-            <li key={user.id}>
-              <img src={user.avatar} alt={`${user.first_name} ${user.last_name}`} />
-              <p>{user.first_name} {user.last_name}</p>
-              <p>{user.email}</p>
-            </li>
+            <Card key={user.id}
+            avatar={user.avatar}
+            first_name={user.first_name}
+            last_name={user.last_name}
+            email={user.email} 
+             />
           ))}
-        </ul>
+        </div>
       )}
 
-      <div>
+      <div className='flex flex-row gap-2 md:gap-4'>
         <button
           disabled={page === 1}
           onClick={() => handlePagination(page - 1)}
+          className='min-w-9 p-1 rounded  border-2  border-solid border-fuchsia-900	hover:border-fuchsia-600 focus:bg-gray-100'
         >
-          Previous
+          Prev
         </button>
 
-        <span>Page {page} of {totalPages}</span>
+        <span> {page} / {totalPages}</span>
 
         <button
           disabled={page === totalPages}
           onClick={() => handlePagination(page + 1)}
+          className='min-w-9 p-1 rounded  border-2  border-solid border-fuchsia-900	hover:border-fuchsia-600 focus:bg-gray-100'
         >
           Next
         </button>
