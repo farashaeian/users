@@ -5,6 +5,7 @@ import Card from '@/components/Card';
 import Modal from '@/components/Modal';
 import { ApiResponse, User } from '@/types';
 import Loading from '@/components/Loading';
+import { usersApi } from '@/routes';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,14 +27,14 @@ const Home: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);  // Add modal state
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   // Fetch users data from API based on current page
   const fetchUsers = async (page: number) => {
     setError(null);
 
     try {
-      const res = await fetch(`https://reqres.in/api/users?page=${page}`);
+      const res = await fetch(`${usersApi.list}?page=${page}`);
       const data: ApiResponse = await res.json();
 
       setUsers(data.data);
@@ -76,7 +77,7 @@ const Home: React.FC = () => {
 
       {loading && <Loading/>}
       {error && <p className='text-red-500'>{error}</p>}
-      {!loading && users.length === 0 && <p>No users found.</p>}
+      {!error && !loading && users.length === 0 && <p>No users found.</p>}
 
       {users.length > 0 && (
         <div className='list-container'>
