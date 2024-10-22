@@ -49,10 +49,12 @@ const Home: React.FC = () => {
 
   // Handle URL query param change
   useEffect(() => {
-    const pageParam = router.query.page ? parseInt(router.query.page as string, 10) : 1;
-    setPage(pageParam);
-    fetchUsers(pageParam);
-  }, [router.query.page]);
+    if (router.isReady) {
+      const pageParam = router.query.page ? parseInt(router.query.page as string, 10) : 1;
+      setPage(pageParam);
+      fetchUsers(pageParam);      
+    }
+  }, [router.isReady,router.query.page]);
 
   // Sync URL with page when pagination buttons are clicked
   const handlePagination = (newPage: number) => {
@@ -75,7 +77,7 @@ const Home: React.FC = () => {
     >
       <div className='page-title'>Users List</div>
 
-      {loading && <Loading/>}
+      {loading && <Loading />}
       {error && <p className='text-red-500'>{error}</p>}
       {!error && !loading && users.length === 0 && <p>No users found.</p>}
 
